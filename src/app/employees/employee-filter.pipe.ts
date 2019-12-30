@@ -4,7 +4,8 @@ import { EmployeeService } from './employee.service';
 
 
 @Pipe({
-    name: 'employeeFilter'
+    name: 'employeeFilter',
+    pure: true
 })
 export class EmployeeFilterPipe implements PipeTransform {
     transform(employees: Employee[], searchTerm: string): Employee[] {
