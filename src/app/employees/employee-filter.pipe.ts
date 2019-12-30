@@ -5,10 +5,13 @@ import { EmployeeService } from './employee.service';
 
 @Pipe({
     name: 'employeeFilter',
-    pure: true
+    pure: false
 })
 export class EmployeeFilterPipe implements PipeTransform {
+    private counter = 0;
     transform(employees: Employee[], searchTerm: string): Employee[] {
+        this.counter++;
+        console.log('Filter pipe execute count ' + this.counter);
         if (!employees || !searchTerm) {
             return employees
         }
