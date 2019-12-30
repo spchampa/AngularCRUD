@@ -14,6 +14,7 @@ export class ListEmployeesComponent implements OnInit {
 
   // how to retrieve this employees data from a database table
   employees: Employee[];
+  searchTerm: string;
 
 
   constructor(private _employeeService: EmployeeService, private _router: Router) { }
