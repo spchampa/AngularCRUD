@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // import Employee Model
 import { Employee } from '../models/employee.model';
-import { EmployeeService } from './employee.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -31,25 +30,17 @@ export class ListEmployeesComponent implements OnInit {
       employee.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
   }
 
-  constructor(private _employeeService: EmployeeService, 
-              private _router: Router,
-              private _route: ActivatedRoute) { }
+  constructor(private _router: Router, private _route: ActivatedRoute) {
+    this.employees = this._route.snapshot.data['employeeList'];
+    if (this._route.snapshot.queryParamMap.has('searchTerm')) {
+      this.searchTerm = this._route.snapshot.queryParamMap.get('searchTerm');
+    } else {
+      this.filteredEmployees = this.employees;
+    }
+  }
 
   ngOnInit() {
-    this._employeeService.getEmployees().subscribe((empList) => {
-      this.employees = empList;
-      this.filteredEmployees = this.employees;
-      if (this._route.snapshot.queryParamMap.has('searchTerm')) {
-        this.searchTerm = this._route.snapshot.queryParamMap.get('searchTerm');
-      } else {
-        this.filteredEmployees = this.employees;
-      }
-    }); // the 2 second delay happens here. rest happens asynchronously.
-    
-    // console.log(this._route.snapshot.queryParamMap.get('searchTerm'));
-    // console.log(this._route.snapshot.queryParamMap.getAll('searchTerm'));
-    // console.log(this._route.snapshot.queryParamMap.keys); // query parameters
-    // console.log(this._route.snapshot.paramMap.keys); // Required or optional parameters
+
   }
 
   onClick(employeeId: number) {
