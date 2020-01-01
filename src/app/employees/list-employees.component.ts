@@ -36,13 +36,16 @@ export class ListEmployeesComponent implements OnInit {
               private _route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.employees = this._employeeService.getEmployees();
-    this.filteredEmployees = this.employees;
-    if (this._route.snapshot.queryParamMap.has('searchTerm')) {
-      this.searchTerm = this._route.snapshot.queryParamMap.get('searchTerm');
-    } else {
+    this._employeeService.getEmployees().subscribe((empList) => {
+      this.employees = empList;
       this.filteredEmployees = this.employees;
-    }
+      if (this._route.snapshot.queryParamMap.has('searchTerm')) {
+        this.searchTerm = this._route.snapshot.queryParamMap.get('searchTerm');
+      } else {
+        this.filteredEmployees = this.employees;
+      }
+    }); // the 2 second delay happens here. rest happens asynchronously.
+    
     // console.log(this._route.snapshot.queryParamMap.get('searchTerm'));
     // console.log(this._route.snapshot.queryParamMap.getAll('searchTerm'));
     // console.log(this._route.snapshot.queryParamMap.keys); // query parameters
