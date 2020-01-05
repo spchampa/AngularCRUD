@@ -53,8 +53,19 @@ export class EmployeeService {
         return this.listEmployees.find(e => e.id === id);
       }
 
-      save(employee: Employee){
+      save(employee: Employee) {
+        if (employee.id === null) {
+          const maxid = this.listEmployees.reduce(function(e1,e2) {
+            return (e1.id > e2.id) ? e1 : e2;
+          }).id;
+          employee.id = maxid + 1;
           this.listEmployees.push(employee);
+        } else {
+          const foundIndex = this.listEmployees.findIndex(e => e.id === employee.id);
+          this.listEmployees[foundIndex] = employee;
+
+        }
+        
       }
 
 }
