@@ -42,24 +42,4 @@ export class ListEmployeesComponent implements OnInit {
   ngOnInit() {
 
   }
-
-  onClick(employeeId: number) {
-    this._router.navigate(['/employees',employeeId], {
-      queryParams: { 'searchTerm': this.searchTerm, 'testParam': 'testValue' }
-    });
-  }
-
-  changeEmployeeName() {
-    this.employees[0].name = 'Jordan';
-    this.filteredEmployees = this.filtereEmployees(this.searchTerm);
-    // const newEmployeeArray: Employee[] = Object.assign([], this.employees);
-    // newEmployeeArray[0].name = 'Jordan';
-    // this.employees = newEmployeeArray;
-  }
-
-  onMouseMove() {
-
-  }
-
-
 }
