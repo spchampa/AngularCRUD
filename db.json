@@ -32,6 +32,20 @@
       "department": "3",
       "isActive": false,
       "photoPath": "assets/images/john.png"
+    },
+    {
+      "id": 4,
+      "name": "David",
+      "gender": "Male",
+      "contactPreference": "Phone",
+      "phoneNumber": "2812345",
+      "email": "dave@dave.ca",
+      "dateOfBirth": "2022-01-15T07:00:00.000Z",
+      "department": "1",
+      "isActive": true,
+      "photoPath": "assets/images/mary.png",
+      "password": "aa",
+      "confirmPassword": "aa"
     }
   ]
 }
