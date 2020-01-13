@@ -50,6 +50,8 @@ export class EmployeeService {
     },
   ];
 
+  baseUrl = 'http://localhost:3000/employees';
+
   private handleError(errorResponse: HttpErrorResponse) {
     if(errorResponse.error instanceof ErrorEvent) {
       console.error('Client Side Error: ', errorResponse.error.message);
@@ -61,27 +63,32 @@ export class EmployeeService {
   }
 
   getEmployees(): Observable<Employee[]> {
-      return this.httpClient.get<Employee[]>('http://localhost:3000/employees')
+      return this.httpClient.get<Employee[]>(this.baseUrl);
           // .pipe(catchError(this.handleError));
           // Part 66. This ^^ commented code does not work in angular 8.
   }
 
-  getEmployee(id: number): Employee {
-    return this.listEmployees.find(e => e.id === id);
+  getEmployee(id: number): Observable<Employee> {
+    return this.httpClient.get<Employee>(`${this.baseUrl}/${id}`);
+      //.pipe(catchError(this.handleError));
   }
 
-  save(employee: Employee): Observable<Employee> {
-    if (employee.id === null) {
-      return this.httpClient.post<Employee>('http://localhost:3000/employees', employee, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        })
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.httpClient.post<Employee>(this.baseUrl, employee, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
       })
-      //.pipe(catchError(this.handleError));
-    } else {
-      const foundIndex = this.listEmployees.findIndex(e => e.id === employee.id);
-      this.listEmployees[foundIndex] = employee;
-    }
+    })
+    //.pipe(catchError(this.handleError));
+  }
+
+  updateEmployee(employee: Employee): Observable<void> {
+    return this.httpClient.put<void>(`${this.baseUrl}/${employee.id}`, employee, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+    //.pipe(catchError(this.handleError));
   }
 
   deleteEmployee(id: number) {
